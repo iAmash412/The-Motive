@@ -48,7 +48,7 @@ def resgister_user():
     user_exists = User.query.filter_by(email=email).first() is not None
 
     if user_exists:
-        abort(409)
+        return jsonify({})
 
     hashed_password = bcrypt.generate_password_hash(password)
     new_user = User(email=email, password=hashed_password)

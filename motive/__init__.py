@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 from .database.db import db
 from .routes.main import main_routes
 from .routes.api import api_routes
+from .routes.main import main_routes
 # Load environment variables
 
 load_dotenv()
@@ -29,11 +30,8 @@ db.app = app
 db.init_app(app)
 
 app.register_blueprint(main_routes) # Actually link the planned routes to the app
-app.register_blueprint(api_routes, url_prefix="/api",)
+app.register_blueprint(api_routes, url_prefix="/api", )
 ## Main
-
-def server():
-    return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

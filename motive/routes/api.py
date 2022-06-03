@@ -6,7 +6,7 @@ from ..models.listing import Listing
 api_routes = Blueprint("api", __name__)
 
 @api_routes.route("/", methods=["GET"])
-@cross_origin
+@cross_origin()
 def index():
     return {
         "title": "The Motive"

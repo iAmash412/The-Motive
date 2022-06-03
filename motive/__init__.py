@@ -1,9 +1,10 @@
 from dotenv import load_dotenv
 from os import environ
-from flask import Flask, send_from_directory, jsonify
+from flask_bcrypt import Bcrypt
+from flask import Flask, send_from_directory, jsonify, request, abort
 from flask_cors import CORS, cross_origin
 
-from .database.db import db
+from .models.user import db, User
 # Load environment variables
 
 load_dotenv()
@@ -18,11 +19,13 @@ if 'postgres' in database_uri:
 app = Flask(__name__, static_folder="client/build", static_url_path="")
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,
-    SQLALCHEMY_TRACK_MODIFICATIONS=environ.get('SQL_ALCHEMY_TRACK_MODIFICATIONS')
+    SQLALCHEMY_TRACK_MODIFICATIONS=environ.get('SQL_ALCHEMY_TRACK_MODIFICATIONS'),
+    SECRET_KEY=environ.get('SECRET')
 )
 
 CORS(app)
 
+bcrypt = Bcrypt(app)
 db.app = app
 db.init_app(app)
 
@@ -34,6 +37,27 @@ db.init_app(app)
 def index():
     return jsonify({
         "title": "The Motive"
+    })
+
+@app.route("/register", methods=["POST"])
+@cross_origin()
+def resgister_user():
+    email = request.json["email"]
+    password = request.json["password"]
+
+    user_exists = User.query.filter_by(email=email).first() is not None
+
+    if user_exists:
+        abort(409)
+
+    hashed_password = bcrypt.generate_password_hash(password)
+    new_user = User(email=email, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({
+       "id": new_user.id,
+       "email":new_user.email
     })
 
 

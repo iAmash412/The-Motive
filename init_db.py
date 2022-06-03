@@ -1,5 +1,4 @@
-from motive import db
-from motive.models.listing import Listing
+from motive.models.user import db, User
 
 # Clear it all out
 
@@ -11,6 +10,3 @@ db.create_all()
 
 # Seed data
 
-l = Listing(title="Start", body="First", email="1@email.com")
-db.session.add(l)
-db.session.commit()

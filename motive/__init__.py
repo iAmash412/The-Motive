@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 from os import environ
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 from .database.db import db
 from .routes.main import main_routes
-
+from .routes.api import api_routes
 # Load environment variables
 
 load_dotenv()
@@ -17,7 +17,7 @@ if 'postgres' in database_uri:
 
 # Set up the app
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='client/build', static_url_path="")
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS=environ.get('SQL_ALCHEMY_TRACK_MODIFICATIONS')
@@ -29,8 +29,11 @@ db.app = app
 db.init_app(app)
 
 app.register_blueprint(main_routes) # Actually link the planned routes to the app
-
+app.register_blueprint(api_routes, url_prefix="/api",)
 ## Main
+
+def server():
+    return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

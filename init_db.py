@@ -1,5 +1,5 @@
-from listings import db
-from listings.models.listing import Listing
+from motive import db
+from motive.models.listing import Listing
 
 # Clear it all out
 

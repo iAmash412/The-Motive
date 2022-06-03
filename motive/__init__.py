@@ -15,7 +15,7 @@ if 'postgres' in database_uri:
 
 # Set up the app
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="client/build", static_url_path="")
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS=environ.get('SQL_ALCHEMY_TRACK_MODIFICATIONS')
@@ -30,6 +30,7 @@ db.init_app(app)
                                                                 #Api Routes#
 ############################################################################################################################################################
 @app.route("/data", methods=["GET"])
+@cross_origin()
 def index():
     return jsonify({
         "title": "The Motive"
@@ -40,11 +41,10 @@ def index():
                                                                 #App Routes#
 ############################################################################################################################################################
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def serve():
-    return "Welcome to the server" 
+    return send_from_directory(app.static_folder, "index.html")
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-

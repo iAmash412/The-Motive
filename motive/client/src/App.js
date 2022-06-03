@@ -3,10 +3,10 @@ import './App.css';
 import { Deploy } from './components/Deploy';
 
 function App() {
-  const [state, setState] = useState();
+  const [state, setState] = useState({});
 
   useEffect(() => {
-    fetch('/api')
+    fetch('/data')
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -15,11 +15,11 @@ function App() {
       .then((data) => setState(data))
       .then((error) => console.log(error));
   }, []);
+
   return (
     <div className="App">
       <Deploy prop={state} />
     </div>
   );
 }
-
 export default App;

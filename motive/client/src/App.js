@@ -23,7 +23,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Pages.LandingPage />} />
-          <Route path="/Connect" element={<Deploy prop={state} />} />
+          <Route path="/connect" element={<Deploy prop={state} />} />
         </Routes>
       </main>
     </div>

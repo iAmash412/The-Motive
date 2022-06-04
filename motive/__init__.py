@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from os import environ
 from flask_bcrypt import Bcrypt
-from flask import Flask, send_from_directory, jsonify, request, abort
+from flask import Flask, send_from_directory, jsonify, request
 from flask_cors import CORS, cross_origin
 
 from .models.user import db, User
@@ -48,7 +48,7 @@ def resgister_user():
     user_exists = User.query.filter_by(email=email).first() is not None
 
     if user_exists:
-        return jsonify({})
+        return jsonify({"error": "User already exists"}), 409
 
     hashed_password = bcrypt.generate_password_hash(password)
     new_user = User(email=email, password=hashed_password)

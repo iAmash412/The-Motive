@@ -4,7 +4,7 @@ import redis
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 from flask import Flask, send_from_directory, jsonify, request, session
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from werkzeug import exceptions
 
 from .models.user import db, User
@@ -28,6 +28,7 @@ app.config.update(
     SESSION_TYPE = "redis",
     SESSION_PERMANENT = False,
     SESSION_REDIS = redis.from_url("redis://:pd5b772b513d356ff7c0dd1514db19557505e48a390959bd4c93242382ad159ef@ec2-54-194-35-138.eu-west-1.compute.amazonaws.com:31459")
+    SESSION_COOKIE_SECURE = True
 )
 
 CORS(app, supports_credentials=True)

@@ -23,7 +23,11 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Pages.LandingPage />} />
+          <Route path="/Login" element={<Pages.LoginPage />} />
+          <Route path="/Register" element={<Pages.RegisterPage />} />
+          <Route path="/User" element={<Pages.UserPage />} />
           <Route path="/connect" element={<Deploy prop={state} />} />
+          <Route path="*" element={<Pages.NotFoundPage />} />
         </Routes>
       </main>
     </div>

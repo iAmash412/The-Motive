@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_session import Session
 from flask import Flask, send_from_directory, jsonify, request, session
 from flask_cors import CORS, cross_origin
+from werkzeug import exceptions
 
 from .models.user import db, User
 # Load environment variables
@@ -103,7 +104,7 @@ def login_user():
                                                                 #App Routes#
 ############################################################################################################################################################
 
-@app.errorhandler(404)
+@app.errorhandler(exceptions.NotFound)
 def serve(err):
     return send_from_directory(app.static_folder, "index.html")
 

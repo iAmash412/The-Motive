@@ -73,9 +73,9 @@ def login_user():
 
     if not bcrypt.check_password_hash(user.password, password):
          return jsonify({"error": "unauthorised"}), 401
-     return jsonify({
+    return jsonify({
        "id": user.id,
-       "email":user.email
+       "email": user.email
     })
 
 ############################################################################################################################################################

@@ -23,9 +23,9 @@ app.config.update(
     SQLALCHEMY_TRACK_MODIFICATIONS=environ.get('SQL_ALCHEMY_TRACK_MODIFICATIONS'),
     SECRET_KEY=environ.get('SECRET'),
     
-    SESSION_TYPE = "redis"
-    SESSION_PERMANENT = False
-    SESSION_USE_SIGNER = True
+    SESSION_TYPE = "redis",
+    SESSION_PERMANENT = False,
+    SESSION_USE_SIGNER = True,
     SESSION_REDIS = redis.from_url("redis://:pd5b772b513d356ff7c0dd1514db19557505e48a390959bd4c93242382ad159ef@ec2-54-194-35-138.eu-west-1.compute.amazonaws.com:31459")
 )
 

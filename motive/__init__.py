@@ -29,7 +29,7 @@ app.config.update(
     SESSION_REDIS = redis.from_url("redis://:pd5b772b513d356ff7c0dd1514db19557505e48a390959bd4c93242382ad159ef@ec2-54-194-35-138.eu-west-1.compute.amazonaws.com:31459")
 )
 
-CORS(app)
+CORS(app, supports_credentials=True)
 
 bcrypt = Bcrypt(app)
 server_session = Session(app)
@@ -40,7 +40,6 @@ db.init_app(app)
                                                                 #Api Routes#
 ############################################################################################################################################################
 @app.route("/data", methods=["GET"])
-@cross_origin()
 def index():
     return jsonify({
         "title": "The Motive"
@@ -60,7 +59,6 @@ def get_current_user():
     })
 
 @app.route("/register", methods=["POST"])
-@cross_origin()
 def register_user():
     email = request.json["email"]
     password = request.json["password"]
@@ -82,7 +80,6 @@ def register_user():
 
 
 @app.route("/login", methods=["POST"])
-@cross_origin()
 def login_user():
     email = request.json["email"]
     password = request.json["password"]

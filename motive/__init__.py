@@ -104,7 +104,7 @@ def login_user():
                                                                 #App Routes#
 ############################################################################################################################################################
 
-@app.route("/")
+@app.errorhandler(404)
 def serve():
     return send_from_directory(app.static_folder, "index.html")
 

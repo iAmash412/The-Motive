@@ -1,0 +1,21 @@
+
+.main-container {
+    padding: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* color: #ff5900; */
+}
+
+.image-container {
+  padding: 25%;
+  width: 100%;
+  margin: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

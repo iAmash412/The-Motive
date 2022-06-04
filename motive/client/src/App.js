@@ -1,5 +1,7 @@
+import './index.css';
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import * as Pages from './pages';
+import { Routes, Route } from 'react-router-dom';
 import { Deploy } from './components/Deploy';
 
 function App() {
@@ -17,9 +19,15 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Deploy prop={state} />
+    <div id="app" className="container">
+      <main>
+        <Routes>
+          <Route path="/" element={<Pages.LandingPage />} />
+          <Route path="/Connect" element={<Deploy prop={state} />} />
+        </Routes>
+      </main>
     </div>
   );
 }
+
 export default App;

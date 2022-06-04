@@ -104,8 +104,8 @@ def login_user():
                                                                 #App Routes#
 ############################################################################################################################################################
 
-@app.errorhandler(exceptions.NotFound)
-def serve(err):
+@app.route("/")
+def serve():
     return send_from_directory(app.static_folder, "index.html")
 
 

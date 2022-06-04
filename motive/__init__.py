@@ -1,7 +1,8 @@
 from dotenv import load_dotenv
 from os import environ
 from flask_bcrypt import Bcrypt
-from flask import Flask, send_from_directory, jsonify, request
+from flask_session import Session
+from flask import Flask, send_from_directory, jsonify, request, session
 from flask_cors import CORS, cross_origin
 
 from .models.user import db, User
@@ -20,12 +21,18 @@ app = Flask(__name__, static_folder="client/build", static_url_path="")
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS=environ.get('SQL_ALCHEMY_TRACK_MODIFICATIONS'),
-    SECRET_KEY=environ.get('SECRET')
+    SECRET_KEY=environ.get('SECRET'),
+    
+    SESSION_TYPE = "redis"
+    SESSION_PERMANENT = False
+    SESSION_USE_SIGNER = True
+    SESSION_REDIS = redis.from_url("redis://:pd5b772b513d356ff7c0dd1514db19557505e48a390959bd4c93242382ad159ef@ec2-54-194-35-138.eu-west-1.compute.amazonaws.com:31459")
 )
 
 CORS(app)
 
 bcrypt = Bcrypt(app)
+server_session = Session(app)
 db.app = app
 db.init_app(app)
 
@@ -75,6 +82,8 @@ def login_user():
 
     if not bcrypt.check_password_hash(user.password, password):
          return jsonify({"error": "Unauthorised"}), 401
+
+    session["user_id"] = user.id
 
     return jsonify({
        "id": user.id,

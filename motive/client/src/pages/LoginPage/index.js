@@ -19,7 +19,7 @@ const LoginPage = () => {
       console.log(resp.data);
       //   window.location.href = '/User';
     } catch (error) {
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         alert('Invalid Credentials');
       }
     }

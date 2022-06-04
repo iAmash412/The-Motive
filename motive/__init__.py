@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from os import environ
+import redis
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 from flask import Flask, send_from_directory, jsonify, request, session

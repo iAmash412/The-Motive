@@ -41,7 +41,7 @@ def index():
 
 @app.route("/register", methods=["POST"])
 @cross_origin()
-def resgister_user():
+def register_user():
     email = request.json["email"]
     password = request.json["password"]
 
@@ -60,6 +60,23 @@ def resgister_user():
        "email":new_user.email
     })
 
+@app.route("/login", methods=["POST"])
+@cross_origin()
+def login_user():
+    email = request.json["email"]
+    password = request.json["password"]
+
+    user = User.query.filter_by(email=email).first()
+
+    if user is None:
+        return jsonify({"error": "unauthorised"}), 401 
+
+    if not bcrypt.check_password_hash(user.password, password):
+         return jsonify({"error": "unauthorised"}), 401
+     return jsonify({
+       "id": user.id,
+       "email":user.email
+    })
 
 ############################################################################################################################################################
                                                                 #App Routes#
